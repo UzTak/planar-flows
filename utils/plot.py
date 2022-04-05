@@ -160,8 +160,8 @@ def plot_comparison(model, target_distr, flow_length, dpi=400):
 
 
 def plot_available_distributions():
-    target_distributions = ["U_1", "U_2", "U_3", "U_4", "ring"]
-    cmaps = ["Reds", "Purples", "Oranges", "Greens", "Blues"]
+    target_distributions = ["U_1", "U_2", "U_3", "U_4", "ring","normal"]
+    cmaps = ["Reds", "Purples", "Oranges", "Greens", "Blues","Yellows"]
     fig, axes = plt.subplots(1, len(target_distributions), figsize=(20, 5))
     for i, distr in enumerate(target_distributions):
         axlim = 7 if distr == "ring" else 5

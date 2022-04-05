@@ -3,14 +3,13 @@ import torch
 from torch import Tensor
 from typing import Callable
 
-
 class TargetDistribution:
     def __init__(self, name: str):
         """Define target distribution. 
 
         Args:
             name: The name of the target density to use. 
-                  Valid choices: ["U_1", "U_2", "U_3", "U_4", "ring"].
+                  Valid choices: ["U_1", "U_2", "U_3", "U_4", "ring", "normal"].
         """
         self.func = self.get_target_distribution(name)
 
@@ -73,3 +72,21 @@ class TargetDistribution:
                 return u
 
             return ring_density
+        elif name == "normal":
+           
+            def normal_density(z):
+                mu = torch.Tensor([5,5])
+                sigma = torch.Tensor([[1,0],[0,1]])
+                det_sigma = torch.det(sigma)
+                pi = 3.14159265
+
+                diff = z - mu
+                u = torch.zeros(len(diff))
+                for i in range(len(diff)):
+                    a = torch.unsqueeze(diff[i],0)
+                    u[i] = 0.5 * torch.matmul(torch.matmul(a,torch.inverse(sigma)), torch.t(a)) \
+                        + 0.5 * torch.log((2 * pi) ** 2 * det_sigma)
+
+                return u
+
+            return normal_density
